@@ -45,6 +45,7 @@ public class Algorithm {
 		SearchTreeNode current = frontier.getFirst();
 		int[][] current_state = new int[rows][collumns];
 		int[][] child_state = new int[rows][collumns];
+		int children_found = 0;
 		
 		for(int i=0; i<current_state.length; i++)
 			  for(int j=0; j<current_state[i].length; j++)
@@ -70,7 +71,10 @@ public class Algorithm {
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"up",move,null,rows,collumns);
 					
 					tree.add(child);
+					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"up",move,child,rows,collumns));
+					
+					children_found++;
 				}		
 			}
 		}
@@ -95,7 +99,10 @@ public class Algorithm {
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"down",move,null,rows,collumns);
 					
 					tree.add(child);
+					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"down",move,child,rows,collumns));
+					
+					children_found++;
 				}		
 			}
 		}
@@ -119,7 +126,10 @@ public class Algorithm {
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"right",move,null,rows,collumns);
 					
 					tree.add(child);
+					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"right",move,child,rows,collumns));
+					
+					children_found++;
 				}		
 			}
 		}
@@ -143,11 +153,23 @@ public class Algorithm {
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"left",move,null,rows,collumns);
 					
 					tree.add(child);
+					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"left",move,child,rows,collumns));
+					
+					children_found++;
 				}		
 			}
 		}
+		//System.out.println(children_found);
 		
+		current.leaf.children = children_found;
+		
+		if(current.leaf.children == 0) {
+			
+			removeNode(current.leaf);
+		}
+		
+		System.out.println(tree.size());
 	}
 	
 	boolean checkIfIsSolution(SearchTreeNode node) {
@@ -163,7 +185,24 @@ public class Algorithm {
 		
 		return k == 1;
 	}
+
+	
+	void removeNode(SearchTreeNode node) {
 		
+		tree.remove(node);
+		
+		node = node.parent;
+		
+		node.children = node.children - 1;
+		
+		if(node.children == 0) {
+			
+			removeNode(node);
+		}
+
+	}
+	
+	
 	void solutionSteps(SearchTreeNode solution) {
 		
 		Stack<SearchTreeNode> moves_stack = new Stack<SearchTreeNode>();

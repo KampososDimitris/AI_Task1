@@ -5,6 +5,8 @@ public class SearchTreeNode {
 	int[][] state;
 	int h;
 	int g = 0;
+	int children;
+	int index;
 	String direction;
 	String move;
 	SearchTreeNode parent;

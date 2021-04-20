@@ -35,12 +35,13 @@ public class Algorithm {
 				  root_state[i][j]=puzzle[i][j];
 		
 		SearchTreeNode root = new SearchTreeNode(root_state,null,null,null,null,rows,collumns);
+		root.h = 0;
 		
 		tree.add(root);
 		frontier.addFirst(new SearchTreeNode(root_state,null,null,null,root,rows,collumns));
 	}
 	
-	void findChildren() {
+	/*void findChildren() {
 		
 		SearchTreeNode current = frontier.getFirst();
 		int[][] current_state = new int[rows][collumns];
@@ -170,7 +171,7 @@ public class Algorithm {
 		}
 		
 		System.out.println(tree.size());
-	}
+	}*/
 	
 	boolean checkIfIsSolution(SearchTreeNode node) {
 		
@@ -186,7 +187,6 @@ public class Algorithm {
 		return k == 1;
 	}
 
-	
 	void removeNode(SearchTreeNode node) {
 		
 		tree.remove(node);
@@ -201,7 +201,6 @@ public class Algorithm {
 		}
 
 	}
-	
 	
 	void solutionSteps(SearchTreeNode solution) {
 		

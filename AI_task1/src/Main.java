@@ -117,9 +117,22 @@ public class Main {
 				System.exit(0);			
 			}
 		}
-		else if(algorithm.contentEquals("bfs")) {
+		else if(algorithm.contentEquals("best")) {
 				
 			Bfs run = new Bfs(puzzle,rows,collumns);
+			
+			if(!run.moves.isEmpty()) {
+				
+				for(String i: run.moves) {
+					
+					solution.add(i);
+				}
+			}
+			else {
+				
+				System.out.println("Problem occured!");
+				System.exit(0);			
+			}
 				
 		}
 		else {

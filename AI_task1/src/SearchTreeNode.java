@@ -32,16 +32,13 @@ public class SearchTreeNode {
 		
 	}
 
-
 	public String getMove() {
 		return move;
 	}
 
-
 	public void setMove(String move) {
 		this.move = move;
 	}
-
 
 	public void setState(int[][] state) {
 		for(int i=0; i<this.state.length; i++)

@@ -262,7 +262,6 @@ public class Bfs extends Algorithm{
 				}		
 			}
 		}
-		//System.out.println(children_found);
 		
 		current.leaf.children = children_found;
 		
@@ -271,7 +270,6 @@ public class Bfs extends Algorithm{
 			removeNode(current.leaf);
 		}
 		
-		System.out.println(tree.size());
 	}
 	
 }

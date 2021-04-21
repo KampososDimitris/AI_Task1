@@ -68,11 +68,7 @@ public class Main {
 		
 		search(puzzle,algorithm,rows,collumns,solution);
 		
-		/*for(String i: solution) {
-			
-			System.out.println(i);
-		}*/
-		
+		checkSolution(puzzle,solution);
 		
 		try {
 			
@@ -94,8 +90,6 @@ public class Main {
 		
 		
 	}
-	
-	
 	
 	
 	static void search(int[][] puzzle,String algorithm,int rows,int collumns,ArrayList<String> solution) {
@@ -142,5 +136,106 @@ public class Main {
 		
 		
 	}
-
+	
+	static void checkSolution(int[][] puzzle,ArrayList<String> solution) {
+		
+		System.out.println();
+		printState(puzzle);
+		
+		for(String move: solution) {
+			
+			int i1 = Integer.parseInt(move.substring(0,1)) - 1;
+			int j1 = Integer.parseInt(move.substring(2,3)) - 1;
+			int i2 = Integer.parseInt(move.substring(4,5)) - 1;
+			int j2 = Integer.parseInt(move.substring(6,7)) - 1;
+			int i3 = 0;
+			int j3 = 0;
+			
+			
+			if(j2 == j1) {
+				
+				if(i2>i1)
+					i3 = i1 + 1;
+				else if(i1>i2)
+					i3 = i1 - 1;
+				else {
+					System.out.println("Invalid move!");
+					System.exit(0);
+				}
+				j3 = j1;
+			}
+			else if(i2 == i1) {
+				
+				if(j2>j1)
+					j3 = j1 + 1;
+				else if(j1>j2)
+					j3 = j1 - 1;
+				else {
+					System.out.println("Invalid move!");
+					System.exit(0);
+				}
+				i3 = i1;
+			}
+			else {
+				System.out.println("Invalid move!");
+				System.out.println("Incorrect solution!");
+				System.exit(0);
+			}
+			
+			
+			if( (puzzle[i1][j1] == 1) && (puzzle[i2][j2] == 2) && (puzzle[i3][j3] == 1) ) {
+				
+				puzzle[i1][j1] = 2;
+				puzzle[i2][j2] = 1;
+				puzzle[i3][j3] = 2;
+			}
+			else {
+				
+				System.out.println("Incorrect solution!");
+				System.exit(0);
+			}
+			
+			printState(puzzle);
+		}
+		
+		
+		if(checkIfIsSolution(puzzle)) {
+			
+			System.out.println("Solution correct!");
+		}
+		else {
+			
+			System.out.println("Solution incorrect!");
+			System.exit(0);
+		}
+		
+	}
+	
+	static void printState(int[][] state) {
+		
+		for(int i=0; i<state.length; i++) {
+			for(int j=0; j<state[i].length; j++) {
+				
+				System.out.print(state[i][j] + " ");
+			}
+			System.out.println("");
+		}
+		
+		System.out.println();
+	}
+	
+	static boolean checkIfIsSolution(int[][] state) {
+		
+		int k = 0;
+		
+		for(int i=0; i<state.length; i++) {
+			for(int j=0; j<state[i].length; j++) {
+				if(state[i][j] == 1)
+					k++;
+			}
+		}
+		
+		return k == 1;
+	}
+	
 }

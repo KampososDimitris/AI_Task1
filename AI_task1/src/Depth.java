@@ -30,8 +30,7 @@ public class Depth extends Algorithm{
 		
 		
 	}
-	
-	
+		
 	void findChildren() {
 		
 		SearchTreeNode current = frontier.getFirst();
@@ -152,7 +151,6 @@ public class Depth extends Algorithm{
 				}		
 			}
 		}
-		//System.out.println(children_found);
 		
 		current.leaf.children = children_found;
 		
@@ -161,10 +159,6 @@ public class Depth extends Algorithm{
 			removeNode(current.leaf);
 		}
 		
-		System.out.println(tree.size());
 	}
-	
-	
-	
 	
 }

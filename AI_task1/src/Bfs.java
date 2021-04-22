@@ -20,6 +20,8 @@ public class Bfs extends Algorithm{
 			//anazhthsh
 			
 			first_in_frontier_index = findSmallestHVal();
+			//System.out.println(first_in_frontier_index);
+			//System.out.println("Child picked: " + frontier.get(first_in_frontier_index).leaf.h);
 			
 			if(checkIfIsSolution(frontier.get(first_in_frontier_index))) {
 				
@@ -44,14 +46,14 @@ public class Bfs extends Algorithm{
 	
 	int findSmallestHVal() {
 		
-		int h = frontier.get(0).h;
+		int h = frontier.get(0).leaf.h;
 		int i = 0;
 		
 		for(int j=0; j<frontier.size(); j++ ) {
 			
-			if(frontier.get(j).h < h) {
+			if(frontier.get(j).leaf.h < h) {
 				
-				h = frontier.get(j).h;
+				h = frontier.get(j).leaf.h;
 				i = j;
 			}	
 		}
@@ -59,7 +61,7 @@ public class Bfs extends Algorithm{
 		return i;
 	}
 	
-	int findHVal(int[][] state) {
+	int findIsolated(int[][] state) {
 		
 		int isolated = 0;
 		
@@ -134,6 +136,43 @@ public class Bfs extends Algorithm{
 		return isolated;
 	}
 	
+	int findManSumH(int[][] state) {
+		
+		int sum = 0;
+		
+		
+		for(int i=0; i<state.length; i++) {
+			for(int j=0; j<state[i].length; j++) {
+				
+				if(state[i][j] == 1) {
+					System.out.println("i: " + i + " j: " + j);
+					for(int k=0; k<state.length; k++) {
+						for(int l=0; l<state[k].length; l++) {
+							
+							if(state[k][l] == 1) {
+								System.out.println("k: " + k + " l: " + l);
+								sum += manhattanDistance(i,j,k,l);
+								//System.out.println(sum);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return sum;
+	}
+	
+	
+	int manhattanDistance(int i,int j,int k,int l) {
+		
+		int sum = 0;
+		
+		sum =( (Math.abs(i-k)) + (Math.abs(j-l)) );
+		//System.out.println(sum);
+		return sum;
+	}
+	
 	void findChildren() {
 		
 		SearchTreeNode current = frontier.get(first_in_frontier_index);
@@ -164,7 +203,10 @@ public class Bfs extends Algorithm{
 					
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"up",move,null,rows,collumns);
 					
-					child.h = findHVal(current_state);
+					child.h = findManSumH(child_state);
+					
+					System.out.println("Child up: " + child.h);
+					System.out.println("-------------------");
 					
 					tree.add(child);
 					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
@@ -194,7 +236,10 @@ public class Bfs extends Algorithm{
 					
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"down",move,null,rows,collumns);
 					
-					child.h = findHVal(current_state);
+					child.h = findManSumH(child_state);
+					
+					System.out.println("Child down: " + child.h);
+					System.out.println("-------------------");
 					
 					tree.add(child);
 					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
@@ -223,7 +268,10 @@ public class Bfs extends Algorithm{
 					
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"right",move,null,rows,collumns);
 					
-					child.h = findHVal(current_state);
+					child.h = findManSumH(child_state);
+					
+					System.out.println("Child right: " + child.h);
+					System.out.println("-------------------");
 					
 					tree.add(child);
 					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
@@ -252,7 +300,10 @@ public class Bfs extends Algorithm{
 					
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"left",move,null,rows,collumns);
 					
-					child.h = findHVal(current_state);
+					child.h = findManSumH(child_state);
+					
+					System.out.println("Child left: " + child.h);
+					System.out.println("-------------------");
 					
 					tree.add(child);
 					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
@@ -270,6 +321,7 @@ public class Bfs extends Algorithm{
 			removeNode(current.leaf);
 		}
 		
+		//System.out.println(tree.size());
 	}
 	
 }

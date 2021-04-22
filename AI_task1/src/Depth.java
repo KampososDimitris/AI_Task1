@@ -13,7 +13,12 @@ public class Depth extends Algorithm{
 		
 		do {
 			findChildren(); 
-
+			
+			long currentTime;
+			currentTime = System.currentTimeMillis();
+			timeElapsed = (currentTime - startTime) / 1000F;
+			timeElapsed = Math.round(timeElapsed * 100.0) / 100.0;
+			
 			if(checkIfIsSolution(frontier.getFirst())) {
 				
 				endTime = System.currentTimeMillis();
@@ -26,7 +31,7 @@ public class Depth extends Algorithm{
 				solutionSteps(frontier.getFirst());
 			}
 			
-		} while(moves.isEmpty());
+		} while(moves.isEmpty() && (timeElapsed < TIME_LIMIT));
 		
 		
 	}

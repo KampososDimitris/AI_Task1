@@ -62,6 +62,7 @@ public class Main {
 		}
 		catch(FileNotFoundException e) {
 			System.out.println("File not found!");
+			System.exit(0);
 		}
 		
 		
@@ -84,8 +85,8 @@ public class Main {
 			writer.close();
 		}
 		catch(IOException e) {
-			
-			e.printStackTrace();
+			System.out.println("Could not write to file!");
+			System.exit(0);
 		}
 		
 		
@@ -107,7 +108,7 @@ public class Main {
 			}
 			else {
 				
-				System.out.println("Problem occured!");
+				System.out.println("Time out!");
 				System.exit(0);			
 			}
 		}
@@ -124,7 +125,7 @@ public class Main {
 			}
 			else {
 				
-				System.out.println("Problem occured!");
+				System.out.println("Time out!");
 				System.exit(0);			
 			}
 				

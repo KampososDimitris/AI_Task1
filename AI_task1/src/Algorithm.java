@@ -27,6 +27,7 @@ public class Algorithm {
 		
 	}
 	
+	//Συνάρτηση όπου δημιουργούνται το δέντρο και το μέτωπο αναζήτησης.
 	void initiateTree() {
 		
 		int[][] root_state = new int[rows][collumns];
@@ -41,7 +42,8 @@ public class Algorithm {
 		tree.add(root);
 		frontier.addFirst(new SearchTreeNode(root_state,null,null,null,root,rows,collumns));
 	}
-
+	
+	//Συνάρτηση που ελέγχεται εάν στην τελική κατάσταση έχει απομείνει ένας πάσαλος.
 	boolean checkIfIsSolution(SearchTreeNode node) {
 		
 		int k = 0;
@@ -55,7 +57,8 @@ public class Algorithm {
 		
 		return k == 1;
 	}
-
+	
+	//Συνάρτηση όπου διαγράφεται ένας κόμβος που δεν έχει παιδιά και δεν αποτελεί λύση.Επίσης ελέγχονται αναδρομικά και οι πιο πάνω κόμβοι για την διαγραφή υποδέντρων που δε παράγουν λύση.
 	void removeNode(SearchTreeNode node) {
 		
 		tree.remove(node);
@@ -71,6 +74,7 @@ public class Algorithm {
 
 	}
 	
+	//Συνάρτηση που αποθηκεύει τα βήματα της λύσης σε μια λίστα.
 	void solutionSteps(SearchTreeNode solution) {
 		
 		Stack<SearchTreeNode> moves_stack = new Stack<SearchTreeNode>();
@@ -93,6 +97,7 @@ public class Algorithm {
 		
 	}
 	
+	//Συνάρτηση εκτύπωσης της κατάστασης ενός στιγμιοτύπου του παζλ.
 	void printState(int[][] state) {
 		
 		for(int i=0; i<rows; i++) {
@@ -104,37 +109,6 @@ public class Algorithm {
 		}
 		
 		System.out.println();
-	}
-	
-	void printList(LinkedList<SearchTreeNode> f) {
-		
-		System.out.println("Start of frontier print\n");
-		
-		for(SearchTreeNode i: f) {
-			
-			printState(i.state);
-			System.out.println(i.direction);
-			System.out.println(i.g);
-			System.out.println(i.move);
-		}
-		
-		System.out.println("End of frontier print\n");
-		
-	}
-	
-	void printTree(ArrayList<SearchTreeNode> t) {
-		
-		System.out.println("Start of tree print\n");
-		
-		for(SearchTreeNode i: t) {
-			
-			printState(i.state);
-			System.out.println(i.direction);
-			System.out.println(i.g);
-			System.out.println(i.move);
-		}
-		
-		System.out.println("End of tree print\n");
 	}
 	
 }

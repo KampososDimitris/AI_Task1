@@ -11,6 +11,7 @@ public class Depth extends Algorithm{
 		
 		initiateTree();
 		
+		//Βρόγχος που τρέχει μέχρι να βρεθεί λύση από το πρόγραμμα ή να ξεπεραστεί το μέγιστο χρονικό όριο που έχει τεθεί.
 		do {
 			findChildren(); 
 			
@@ -26,8 +27,6 @@ public class Depth extends Algorithm{
 				timeElapsed = (endTime - startTime) / 1000F;
 				timeElapsed = Math.round(timeElapsed * 100.0) / 100.0;
 				
-				System.out.println(timeElapsed);
-				
 				solutionSteps(frontier.getFirst());
 			}
 			
@@ -35,10 +34,13 @@ public class Depth extends Algorithm{
 		
 		
 	}
-		
+	
+	//Συνάρτηση που βρίσκει τα παιδιά ενός κόμβου και τα τοποθετεί στο δέντρο και στο μέτωπο αναζήτησης με βάση τον αλγόριθμο "πρώτα σε βάθος".
 	void findChildren() {
 		
+		//Επιλέγεται ο κόμβος που βρίσκεται πρώτος στο μέτωπο αναζήτησης.
 		SearchTreeNode current = frontier.getFirst();
+		
 		int[][] current_state = new int[rows][collumns];
 		int[][] child_state = new int[rows][collumns];
 		int children_found = 0;
@@ -47,9 +49,10 @@ public class Depth extends Algorithm{
 			  for(int j=0; j<current_state[i].length; j++)
 				  current_state[i][j]=current.state[i][j];
 		
+		//Διαγράφεται ο κόμβος που ελέγχεται από το μέτωπο αναζήτησης εφόσον δεν αποτελεί λύση(κάτι που έχει ελεγχθεί στο κυρίως προγραμμα).
 		frontier.removeFirst();
 		
-		//Εξετάζεται το παζλ για κινήσεις προς τα πάνω.
+		//Εξετάζεται το παζλ για κινήσεις προς τα πάνω και ενημερώνονται το δέντρο και το μέτωπο αναζήτησης.
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<collumns; j++) {
 				if((i-1 >= 0) && (i-2 >= 0) && 
@@ -67,7 +70,6 @@ public class Depth extends Algorithm{
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"up",move,null,rows,collumns);
 					
 					tree.add(child);
-					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"up",move,child,rows,collumns));
 					
 					children_found++;
@@ -76,7 +78,7 @@ public class Depth extends Algorithm{
 		}
 		
 		
-		//Εξετάζεται το παζλ για κινήσεις προς τα κάτω.
+		//Εξετάζεται το παζλ για κινήσεις προς τα κάτω και ενημερώνονται το δέντρο και το μέτωπο αναζήτησης.
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<collumns; j++) {
 				
@@ -95,7 +97,6 @@ public class Depth extends Algorithm{
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"down",move,null,rows,collumns);
 					
 					tree.add(child);
-					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"down",move,child,rows,collumns));
 					
 					children_found++;
@@ -103,7 +104,7 @@ public class Depth extends Algorithm{
 			}
 		}
 		
-		//Εξετάζεται το παζλ για κινήσεις προς τα δεξιά.
+		//Εξετάζεται το παζλ για κινήσεις προς τα δεξιά και ενημερώνονται το δέντρο και το μέτωπο αναζήτησης.
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<collumns; j++) {
 				
@@ -122,7 +123,6 @@ public class Depth extends Algorithm{
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"right",move,null,rows,collumns);
 					
 					tree.add(child);
-					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"right",move,child,rows,collumns));
 					
 					children_found++;
@@ -130,7 +130,7 @@ public class Depth extends Algorithm{
 			}
 		}
 		
-		//Εξετάζεται το παζλ για κινήσεις προς τα αριστερά.
+		//Εξετάζεται το παζλ για κινήσεις προς τα αριστερά και ενημερώνονται το δέντρο και το μέτωπο αναζήτησης.
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<collumns; j++) {
 				
@@ -149,7 +149,6 @@ public class Depth extends Algorithm{
 					SearchTreeNode child = new SearchTreeNode(child_state,current.leaf,"left",move,null,rows,collumns);
 					
 					tree.add(child);
-					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"left",move,child,rows,collumns));
 					
 					children_found++;
@@ -159,10 +158,9 @@ public class Depth extends Algorithm{
 		
 		current.leaf.children = children_found;
 		
-		if(current.leaf.children == 0) {
-			
+		//Ελέγχεται εάν ο κόμβος που εξετάστηκε είναι να διαγραφεί.
+		if(current.leaf.children == 0) 
 			removeNode(current.leaf);
-		}
 		
 	}
 	

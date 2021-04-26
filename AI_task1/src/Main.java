@@ -17,6 +17,7 @@ public class Main {
 		int rows = 0;
 		int collumns = 0;
 		ArrayList<String> solution = new ArrayList<String>();
+		double time = 0;
 		
 		
 		//Είσοδος από τον χρήστη.
@@ -66,11 +67,15 @@ public class Main {
 		}
 		
 		
+		//Εκτέλεση αλγορίθμου.
+		search(puzzle,algorithm,rows,collumns,solution,time);
 		
-		search(puzzle,algorithm,rows,collumns,solution);
-		
+		//Έλεγχος λύσης.
 		checkSolution(puzzle,solution);
 		
+		System.out.println("Time elapsed: " + time + "s");
+		
+		//Εγγραφή λύσης στο αρχείο εξόδου.
 		try {
 			
 			FileWriter writer = new FileWriter(output_file);
@@ -93,7 +98,8 @@ public class Main {
 	}
 	
 	
-	static void search(int[][] puzzle,String algorithm,int rows,int collumns,ArrayList<String> solution) {
+	//Συνάρτηση όπου επιλέγεται ο αλγόριθμος επίλυσης του παζλ.
+	static void search(int[][] puzzle,String algorithm,int rows,int collumns,ArrayList<String> solution,double time) {
 		
 		if(algorithm.contentEquals("depth")) {
 				
@@ -104,6 +110,7 @@ public class Main {
 				for(String i: run.moves) {
 					
 					solution.add(i);
+					time = run.timeElapsed;
 				}
 			}
 			else {
@@ -121,6 +128,7 @@ public class Main {
 				for(String i: run.moves) {
 					
 					solution.add(i);
+					time = run.timeElapsed;
 				}
 			}
 			else {
@@ -138,6 +146,7 @@ public class Main {
 		
 	}
 	
+	//Συνάρτηση όπου ελέγχεται η εγκυρότητα της λύσης που βρέθηκε απο το πρόγραμμα.
 	static void checkSolution(int[][] puzzle,ArrayList<String> solution) {
 		
 		System.out.println();
@@ -212,6 +221,7 @@ public class Main {
 		
 	}
 	
+	//Συνάρτηση εκτύπωσης της κατάστασης ενός στιγμιοτύπου του παζλ.
 	static void printState(int[][] state) {
 		
 		for(int i=0; i<state.length; i++) {
@@ -225,6 +235,7 @@ public class Main {
 		System.out.println();
 	}
 	
+	//Συνάρτηση που ελέγχεται εάν στην τελική κατάσταση έχει απομείνει ένας πάσαλος.
 	static boolean checkIfIsSolution(int[][] state) {
 		
 		int k = 0;

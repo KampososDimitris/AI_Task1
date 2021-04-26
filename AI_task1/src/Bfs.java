@@ -12,14 +12,14 @@ public class Bfs extends Algorithm{
 		
 		initiateTree();
 		
+		//Βρίσκεται ο δείκτης προς το μέτωπο αναζήτησης,του κόμβου-φύλλο με το μικρότερο h.
 		first_in_frontier_index = findSmallestHVal();
 		
+		//Βρόγχος που τρέχει μέχρι να βρεθεί λύση από το πρόγραμμα ή να ξεπεραστεί το μέγιστο χρονικό όριο που έχει τεθεί.
 		do {
 			findChildren(); 
 			
 			first_in_frontier_index = findSmallestHVal();
-			//System.out.println(first_in_frontier_index);
-			//System.out.println("Child picked: " + frontier.get(first_in_frontier_index).leaf.h);
 			
 			long currentTime;
 			currentTime = System.currentTimeMillis();
@@ -33,8 +33,6 @@ public class Bfs extends Algorithm{
 				timeElapsed = (endTime - startTime) / 1000F;
 				timeElapsed = Math.round(timeElapsed * 100.0) / 100.0;
 				
-				System.out.println(timeElapsed);
-				
 				solutionSteps(frontier.get(first_in_frontier_index));
 			}
 			
@@ -46,7 +44,7 @@ public class Bfs extends Algorithm{
 	}
 	
 	
-	
+	//Συνάρτηση που βρίσκει και επιστρέφει το δείκτη προς το μέτωπο αναζήτησης του κόμβου-φύλλο με τη μικρότερη τιμή h.
 	int findSmallestHVal() {
 		
 		int h = frontier.get(0).leaf.h;
@@ -64,81 +62,7 @@ public class Bfs extends Algorithm{
 		return i;
 	}
 	
-	int findIsolated(int[][] state) {
-		
-		int isolated = 0;
-		
-		
-		for(int i=0; i<rows; i++) {
-			for(int j=0; j<collumns; j++) {
-				
-				
-				
-				//panw grammh
-				if(i-1 < 0) {
-					
-					if(j-1 < 0) {
-						
-						if( (state[i][j] == 1) && (state[i][j+1] != 1) && (state[i+1][j+1] != 1) && (state[i+1][j] != 1) ) 
-							isolated++;
-					}
-					else if(j+1 >= collumns) {
-						
-						if( (state[i][j] == 1) && (state[i][j-1] != 1) && (state[i+1][j-1] != 1) && (state[i+1][j] != 1) ) 
-							isolated++;
-					}
-					else {
-						
-						if( (state[i][j] == 1) && (state[i][j+1] != 1) && (state[i+1][j+1] != 1) && (state[i+1][j] != 1) && (state[i][j-1] != 1) && (state[i+1][j-1] != 1) ) 
-							isolated++;
-					}
-				}
-				//katw grammh
-				else if(i+1 >= rows) {
-					
-					if(j-1 < 0) {
-						
-						if( (state[i][j] == 1) && (state[i-1][j] != 1) && (state[i-1][j+1] != 1) && (state[i][j+1] != 1) ) 
-							isolated++;
-					}
-					else if(j+1 >= collumns) {
-						
-						if( (state[i][j] == 1) && (state[i][j-1] != 1) && (state[i-1][j-1] != 1) && (state[i-1][j] != 1) ) 
-							isolated++;
-					}
-					else {
-						
-						if( (state[i][j] == 1) && (state[i][j-1] != 1) && (state[i-1][j-1] != 1) && (state[i-1][j] != 1) && (state[i-1][j+1] != 1) && (state[i][j+1] != 1) ) 
-							isolated++;
-					}
-				}
-				//endiamesa
-				else {
-					
-					if(j-1 < 0) {
-						
-						if( (state[i][j] == 1) && (state[i-1][j] != 1) && (state[i-1][j+1] != 1) && (state[i][j+1] != 1) && (state[i+1][j+1] != 1) && (state[i+1][j] != 1) ) 
-							isolated++;
-					}
-					else if(j+1 >= collumns) {
-						
-						if( (state[i][j] == 1) && (state[i-1][j] != 1) && (state[i-1][j-1] != 1) && (state[i][j-1] != 1) && (state[i+1][j-1] != 1) && (state[i+1][j] != 1) ) 
-							isolated++;
-					}
-					else {
-						
-						if( (state[i][j] == 1) && (state[i-1][j-1] != 1) && (state[i-1][j] != 1) && (state[i-1][j+1] != 1) && (state[i+1][j-1] != 1) && (state[i+1][j] != 1) && (state[i+1][j+1] != 1)
-							&& (state[i][j-1] != 1) && (state[i][j+1] != 1) ) 
-							isolated++;
-					}
-				}	
-			}
-		}
-		
-		
-		return isolated;
-	}
-	
+	//Συνάρτηση που βρίσκει και επιστρέφει για ένα κόμβο-φύλλο το σύνολο των αποστάσεων Manhattan κάθε πασάλου από τους άλλους (αποτελεί και την ευρετική συνάρτηση του αλγορίθμου).
 	int findManSumH(int[][] state) {
 		
 		int sum = 0;
@@ -163,7 +87,8 @@ public class Bfs extends Algorithm{
 		
 		return sum;
 	}
-
+	
+	//Συνάρτηση που βρίσκει και επιστρέφει την απόσταση Manhattan δύο σημείων.
 	int manhattanDistance(int i,int j,int k,int l) {
 		
 		int sum = 0;
@@ -173,9 +98,12 @@ public class Bfs extends Algorithm{
 		return sum;
 	}
 	
+	//Συνάρτηση που βρίσκει τα παιδιά ενός κόμβου και τα τοποθετεί στο δέντρο και στο μέτωπο αναζήτησης με βάση τον αλγόριθμο "αναζήτηση πρώτα στο καλύτερο".
 	void findChildren() {
 		
+		//Επιλέγεται ο κόμβος που έχει τη μικρότερη τιμή h (h: Αποτέλεσμα ευρετικής συνάρτησης).
 		SearchTreeNode current = frontier.get(first_in_frontier_index);
+		
 		int[][] current_state = new int[rows][collumns];
 		int[][] child_state = new int[rows][collumns];
 		int children_found = 0;
@@ -184,9 +112,10 @@ public class Bfs extends Algorithm{
 			  for(int j=0; j<current_state[i].length; j++)
 				  current_state[i][j]=current.state[i][j];
 		
+		//Διαγράφεται ο κόμβος που ελέγχεται από το μέτωπο αναζήτησης εφόσον δεν αποτελεί λύση(κάτι που έχει ελεγχθεί στο κυρίως προγραμμα).
 		frontier.remove(first_in_frontier_index);
 		
-		//Εξετάζεται το παζλ για κινήσεις προς τα πάνω.
+		//Εξετάζεται το παζλ για κινήσεις προς τα πάνω και ενημερώνονται το δέντρο και το μέτωπο αναζήτησης.
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<collumns; j++) {
 				if((i-1 >= 0) && (i-2 >= 0) && 
@@ -205,11 +134,7 @@ public class Bfs extends Algorithm{
 					
 					child.h = findManSumH(child_state);
 					
-					//System.out.println("Child up: " + child.h);
-					//System.out.println("-------------------");
-					
 					tree.add(child);
-					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"up",move,child,rows,collumns));
 					
 					children_found++;
@@ -218,7 +143,7 @@ public class Bfs extends Algorithm{
 		}
 		
 		
-		//Εξετάζεται το παζλ για κινήσεις προς τα κάτω.
+		//Εξετάζεται το παζλ για κινήσεις προς τα κάτω και ενημερώνονται το δέντρο και το μέτωπο αναζήτησης.
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<collumns; j++) {
 				
@@ -238,11 +163,7 @@ public class Bfs extends Algorithm{
 					
 					child.h = findManSumH(child_state);
 					
-					//System.out.println("Child down: " + child.h);
-					//System.out.println("-------------------");
-					
 					tree.add(child);
-					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"down",move,child,rows,collumns));
 					
 					children_found++;
@@ -250,7 +171,7 @@ public class Bfs extends Algorithm{
 			}
 		}
 		
-		//Εξετάζεται το παζλ για κινήσεις προς τα δεξιά.
+		//Εξετάζεται το παζλ για κινήσεις προς τα δεξιά και ενημερώνονται το δέντρο και το μέτωπο αναζήτησης.
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<collumns; j++) {
 				
@@ -270,11 +191,7 @@ public class Bfs extends Algorithm{
 					
 					child.h = findManSumH(child_state);
 					
-					//System.out.println("Child right: " + child.h);
-					//System.out.println("-------------------");
-					
 					tree.add(child);
-					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"right",move,child,rows,collumns));
 					
 					children_found++;
@@ -282,7 +199,7 @@ public class Bfs extends Algorithm{
 			}
 		}
 		
-		//Εξετάζεται το παζλ για κινήσεις προς τα αριστερά.
+		//Εξετάζεται το παζλ για κινήσεις προς τα αριστερά και ενημερώνονται το δέντρο και το μέτωπο αναζήτησης.
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<collumns; j++) {
 				
@@ -302,11 +219,7 @@ public class Bfs extends Algorithm{
 					
 					child.h = findManSumH(child_state);
 					
-					//System.out.println("Child left: " + child.h);
-					//System.out.println("-------------------");
-					
 					tree.add(child);
-					//tree.get(tree.indexOf(child)).index = tree.indexOf(child);
 					frontier.addFirst(new SearchTreeNode(child_state,null,"left",move,child,rows,collumns));
 					
 					children_found++;
@@ -316,12 +229,10 @@ public class Bfs extends Algorithm{
 		
 		current.leaf.children = children_found;
 		
-		if(current.leaf.children == 0) {
-			
+		//Ελέγχεται εάν ο κόμβος που εξετάστηκε είναι να διαγραφεί.
+		if(current.leaf.children == 0)
 			removeNode(current.leaf);
-		}
 		
-		//System.out.println(tree.size());
 	}
 	
 }

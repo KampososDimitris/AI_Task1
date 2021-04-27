@@ -13,7 +13,7 @@ public class Algorithm {
 	long startTime = 0;
 	long endTime = 0;
 	double timeElapsed = 0;
-	static final int TIME_LIMIT = 2000;
+	static final int TIME_LIMIT = 60000;
 	
 	
 	public Algorithm(int[][] puzzle,int rows,int collumns) {
@@ -110,5 +110,7 @@ public class Algorithm {
 		
 		System.out.println();
 	}
+	
+	
 	
 }

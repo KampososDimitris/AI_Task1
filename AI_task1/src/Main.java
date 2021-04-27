@@ -68,7 +68,7 @@ public class Main {
 		
 		
 		//Εκτέλεση αλγορίθμου.
-		search(puzzle,algorithm,rows,collumns,solution,time);
+		time = search(puzzle,algorithm,rows,collumns,solution);
 		
 		//Έλεγχος λύσης.
 		checkSolution(puzzle,solution);
@@ -99,7 +99,9 @@ public class Main {
 	
 	
 	//Συνάρτηση όπου επιλέγεται ο αλγόριθμος επίλυσης του παζλ.
-	static void search(int[][] puzzle,String algorithm,int rows,int collumns,ArrayList<String> solution,double time) {
+	static double search(int[][] puzzle,String algorithm,int rows,int collumns,ArrayList<String> solution) {
+		
+		double time = 0;
 		
 		if(algorithm.contentEquals("depth")) {
 				
@@ -110,8 +112,8 @@ public class Main {
 				for(String i: run.moves) {
 					
 					solution.add(i);
-					time = run.timeElapsed;
 				}
+				time = run.timeElapsed;
 			}
 			else {
 				
@@ -128,8 +130,8 @@ public class Main {
 				for(String i: run.moves) {
 					
 					solution.add(i);
-					time = run.timeElapsed;
 				}
+				time = run.timeElapsed;
 			}
 			else {
 				
@@ -142,7 +144,7 @@ public class Main {
 			System.out.println("Enter a valid algorithm!");
 		}
 		
-		
+		return time;
 		
 	}
 	

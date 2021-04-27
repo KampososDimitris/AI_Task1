@@ -6,7 +6,6 @@ public class Depth extends Algorithm{
 		
 		super(puzzle,rows,collumns);
 		
-		
 		startTime = System.currentTimeMillis();
 		
 		initiateTree();

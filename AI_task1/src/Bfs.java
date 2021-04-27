@@ -7,7 +7,6 @@ public class Bfs extends Algorithm{
 		
 		super(puzzle,rows,collumns);
 		
-		
 		startTime = System.currentTimeMillis();
 		
 		initiateTree();
@@ -37,9 +36,6 @@ public class Bfs extends Algorithm{
 			}
 			
 		} while(moves.isEmpty() && (timeElapsed < TIME_LIMIT));
-		
-		
-		
 		
 	}
 	
